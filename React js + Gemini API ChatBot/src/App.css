@@ -1,8 +1,9 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+/* root {
+  max-width: 100%;
+  max-height: 100%;
+  margin: 20px;
+  display: flex;
+  text-align: left;
 }
 
 .logo {
@@ -39,4 +40,150 @@
 
 .read-the-docs {
   color: #888;
+} */
+
+/* body {
+  background-color: #05213d;
+  font-family: Arial, sans-serif;
+} */
+
+/* .conversation {
+  padding: 1rem;
+}
+
+.message {
+  padding: 10px 15px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+} */
+
+/* form {
+  border-top: 1px solid #ddd;
+} */
+
+/* textarea:focus {
+  box-shadow: none;
+  border-color: #87919c;
+} */
+
+/* .btn:disabled {
+  opacity: 0.5;
+}
+
+.maindiv {
+  background-color: #04031fea;
+  max-width: 100%;
+  max-height: 100%;
+  margin: 20px;
+  display: flex;
+  text-align: left;
+}
+
+.submitbtn {
+  background-color: #000000;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+} */
+
+html,
+body {
+  height: 100vh;
+  margin: 0;
+}
+
+.maindiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+  width: 100vw;
+  background-color: #211f22ea;
+  padding: 20px;
+}
+
+.conversation {
+  flex-grow: 1;
+  overflow-y: auto;
+
+  position: relative;
+}
+
+.submitbtn {
+  background-color: #000000;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.submitbtn:disabled {
+  opacity: 0.5;
+}
+
+/* Removed resize: none; to enable Grammarly */
+typearea:focus {
+  box-shadow: none;
+  border-color: #0e75e4;
+}
+
+.button {
+  width: 15%;
+}
+
+.type {
+  border-radius: 25px;
+  width: 85%;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+  margin-bottom: auto;
+}
+
+.message {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  max-width: calc(100% / 12 * 10); /* Maximum width of 10 columns */
+  min-width: 200px; /* Set a minimum width to avoid too small fields */
+  word-wrap: break-word;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  margin-bottom: 0.5rem;
+  background-color: #343a40; /* Dark background */
+  color: white;
+  flex-grow: 1; /* Allow the message to grow based on content */
+  flex-shrink: 1; /* Allow the message to shrink to fit within the parent */
+  flex-basis: auto; /* Automatically adjust size based on content */
+}
+
+.scroll-button {
+  position: sticky;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #0668d1;
+  color: white;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s;
+}
+
+.scroll-button:hover {
+  background-color: #0056b3;
+}
+
+#form{
+background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);
 }
