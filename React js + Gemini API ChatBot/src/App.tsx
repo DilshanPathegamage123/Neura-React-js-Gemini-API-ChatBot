@@ -447,7 +447,7 @@ import logo from "./assets/Logo1.png";
 
 type Message = {
   type: "question" | "answer";
-  text: string;
+  text: string | JSX.Element[];
 };
 
 function App() {
@@ -511,6 +511,83 @@ function App() {
     }
   };
 
+  // function parseAnswerText(answerText: string) {
+  //   const lines = answerText.split("\n");
+  //   const elements = [];
+
+  //   for (let line of lines) {
+  //     if (line.startsWith("## ")) {
+  //       elements.push(<h2>{line.substring(3)}</h2>);
+  //     } else if (line.startsWith("**")) {
+  //       const endIndex = line.indexOf("**", 2);
+  //       if (endIndex !== -1) {
+  //         elements.push(<strong>{line.substring(2, endIndex)}</strong>);
+  //         elements.push(<span>{line.substring(endIndex + 2)}</span>);
+  //       } else {
+  //         elements.push(<span>{line}</span>);
+  //       }
+  //     } else if (line.startsWith("* ")) {
+  //       elements.push(<li>{line.substring(2)}</li>);
+  //     } else {
+  //       elements.push(<p>{line}</p>);
+  //     }
+  //   }
+
+  //   return elements;
+  // }
+
+  function parseAnswerText(answerText: string) {
+    const lines = answerText.split("\n");
+    const elements: JSX.Element[] = [];
+    let insideCodeBlock = false;
+    let codeBlockLines: string[] = [];
+
+    for (let line of lines) {
+      if (line.startsWith("```")) {
+        if (insideCodeBlock) {
+          // End of code block
+          elements.push(
+            <pre className="code-block">
+              <code>{codeBlockLines.join("\n")}</code>
+            </pre>
+          );
+          insideCodeBlock = false;
+          codeBlockLines = [];
+        } else {
+          // Start of code block
+          insideCodeBlock = true;
+        }
+      } else if (insideCodeBlock) {
+        codeBlockLines.push(line);
+      } else if (line.startsWith("## ")) {
+        elements.push(<h2>{line.substring(3)}</h2>);
+      } else if (line.startsWith("**")) {
+        const endIndex = line.indexOf("**", 2);
+        if (endIndex !== -1) {
+          elements.push(<strong>{line.substring(2, endIndex)}</strong>);
+          elements.push(<span>{line.substring(endIndex + 2)}</span>);
+        } else {
+          elements.push(<span>{line}</span>);
+        }
+      } else if (line.startsWith("* ")) {
+        elements.push(<li>{line.substring(2)}</li>);
+      } else if (line.includes("`")) {
+        const parts = line.split(/(`.*?`)/);
+        parts.forEach((part, index) => {
+          if (part.startsWith("`") && part.endsWith("`")) {
+            elements.push(<code key={index}>{part.slice(1, -1)}</code>);
+          } else {
+            elements.push(<span key={index}>{part}</span>);
+          }
+        });
+      } else {
+        elements.push(<p>{line}</p>);
+      }
+    }
+
+    return elements;
+  }
+
   async function generateAnswer(e: React.FormEvent) {
     setGeneratingAnswer(true);
     e.preventDefault();
@@ -532,7 +609,12 @@ function App() {
       });
 
       const newAnswer = response.data.candidates[0].content.parts[0].text;
-      setConversation((prev) => [...prev, { type: "answer", text: newAnswer }]);
+      const parsedAnswer = parseAnswerText(newAnswer);
+
+      setConversation((prev) => [
+        ...prev,
+        { type: "answer", text: parsedAnswer },
+      ]);
     } catch (error) {
       console.log(error);
       setConversation((prev) => [
@@ -540,7 +622,7 @@ function App() {
         { type: "question", text: question },
         {
           type: "answer",
-          text: "Sorry - Something went wrong. Please try again!",
+          text: "Sorry, Something went wrong. Please try again!",
         },
       ]);
     }
@@ -572,7 +654,7 @@ function App() {
       ) : (
         <>
           <div
-            className="conversation container-fluid w-auto m-auto ms-lg-5 me-lg-5 mb-2 mt-2"
+            className="conversation container-fluid w-auto m-auto ms-lg-5 me-lg-5 mb-2 mt-2 p-5"
             ref={conversationRef}
             style={{ maxHeight: "70vh", overflowY: "auto" }} // Set max height and enable scrolling
           >
@@ -591,13 +673,13 @@ function App() {
                 <div
                   className={`message p-2 rounded mb-2 ${
                     msg.type === "question"
-                      ? "bg-dark text-white col-auto mb-3 me-2 "
-                      : "bg-dark text-white col-auto mb-3"
+                      ? "bg-dark text-white col-auto  mb-3 me-2 "
+                      : "bg-dark text-white col-auto  mb-3"
                   }`}
                   // style={{ maxWidth: "100%", wordWrap: "break-word" }}
                 >
                   <div className="ms-2 me-2 justify-content-center align-items-center flex-grow-1">
-                    {msg.text}
+                    {Array.isArray(msg.text) ? msg.text : msg.text}
                   </div>
                 </div>
               </div>
@@ -619,7 +701,7 @@ function App() {
           <textarea
             ref={textareaRef}
             required
-            className="form-control  h-auto type p-2 ps-4 pe-4 "
+            className="m-auto h-auto type p-2 ps-4 pe-4 "
             id="form"
             value={question}
             onChange={(e) => setQuestion(e.target.value)}

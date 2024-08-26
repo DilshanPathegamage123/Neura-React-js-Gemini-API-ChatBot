@@ -1,0 +1,4 @@
+.formatted-answer {
+  max-width: 75%;/* Maximum width of 8 columns */
+  min-width: 200px;
+}
