@@ -100,13 +100,13 @@ body {
   width: 100vw;
   background-color: #211f22ea;
   padding: 20px;
+  padding-top: 20px;
 }
 
 .chat-header {
   top: 0;
-  padding-left: 5%;
+  padding-left: 8%;
   width: 100%;
-  /* padding: 10px 60px; */
   color: rgb(255, 255, 255);
   z-index: 1000;
 }
@@ -115,7 +115,7 @@ body {
   margin: 0;
   font-size: 35px;
   font-weight: 900;
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   left: 30%;
 }
 
@@ -146,8 +146,12 @@ typearea:focus {
   width: 15%;
 }
 
+.typearea {
+  border-radius: 5px;
+}
+
 .type {
-  border-radius: 25px;
+  border-radius: 5px;
   width: 85%;
 }
 
@@ -162,7 +166,7 @@ typearea:focus {
   display: flex;
   align-items: center;
   flex-grow: 1;
-  max-width: calc(100% / 12 * 10); /* Maximum width of 10 columns */
+  max-width: calc(100% / 12 * 8); /* Maximum width of 8 columns */
   min-width: 200px; /* Set a minimum width to avoid too small fields */
   word-wrap: break-word;
   padding: 0.5rem;
@@ -178,7 +182,7 @@ typearea:focus {
 .scroll-button {
   position: sticky;
   bottom: 10px;
-  left: 100%;
+  left: 98%;
   transform: translateX(-50%);
   z-index: 1000;
   display: flex;
@@ -216,4 +220,27 @@ typearea:focus {
 .logo1 {
   width: 370px;
   height: auto;
+}
+
+.code-block {
+  background-color: #282c34;
+  color: #61dafb;
+  padding: 1rem;
+  border-radius: 5px;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+  font-family: "Courier New", Courier, monospace;
+  white-space: pre-wrap; /* Wrap code lines */
+  word-wrap: break-word; /* Break long words */
+  max-width: 90%; /* Ensure the code block does not exceed the screen width */
+  box-sizing: border-box; /* Include padding and border in the element's width and height */
+}
+
+code {
+  color: #c7254e;
+
+  border-radius: 3px;
+  font-family: "Courier New", Courier, monospace;
+  white-space: pre-wrap; /* Wrap inline code lines */
+  word-wrap: break-word; /* Break long words */
 }
