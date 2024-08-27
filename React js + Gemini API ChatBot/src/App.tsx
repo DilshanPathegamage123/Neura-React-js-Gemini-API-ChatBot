@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import "./App.css";
 import axios from "axios";
-import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
+import "bootstrap/dist/css/bootstrap.min.css";
 import { FaArrowDown } from "react-icons/fa"; // Import Font Awesome down arrow icon
 import logo from "./assets/Logo1.png";
 
@@ -20,15 +20,17 @@ function App() {
 
   const botName = "NeurA"; // Define the bot's name
 
+  // To handle dynamic resizing of the textarea
   useEffect(() => {
     if (textareaRef.current) {
       const textareaLineHeight = 24;
       const minRows = 1; // Minimum number of rows in textarea
       const maxRows = 3; // Maximum number of rows in textarea
 
-      const previousRows = textareaRef.current.rows;
+      const previousRows = textareaRef.current.rows; // Get current number of rows in textarea
       textareaRef.current.rows = minRows; // Reset number of rows in textarea
 
+      // Calculate the current number of rows based on scroll height
       const currentRows = Math.floor(
         textareaRef.current.scrollHeight / textareaLineHeight
       );
@@ -37,6 +39,7 @@ function App() {
         textareaRef.current.rows = currentRows;
       }
 
+      // Adjust textarea rows and overflow behavior based on the number of rows
       if (currentRows >= maxRows) {
         textareaRef.current.rows = maxRows;
         textareaRef.current.style.overflowY = "auto";
@@ -47,12 +50,14 @@ function App() {
     }
   }, [question]);
 
+  //To handle scroll events and show/hide the scroll button
+
   useEffect(() => {
     const handleScroll = () => {
       if (conversationRef.current) {
         const { scrollTop, scrollHeight, clientHeight } =
           conversationRef.current;
-        setShowScrollButton(scrollTop + clientHeight < scrollHeight);
+        setShowScrollButton(scrollTop + clientHeight < scrollHeight - 100);
       }
     };
 
@@ -67,17 +72,19 @@ function App() {
     };
   }, []);
 
+  // Function to scroll down when the button is clicked
   const scrollToBottom = () => {
     if (conversationRef.current) {
       conversationRef.current.scrollTop = conversationRef.current.scrollHeight;
     }
   };
 
+  // Function to organize the answer in proprer format
   function parseAnswerText(answerText: string) {
-    const lines = answerText.split("\n");
-    const elements: JSX.Element[] = [];
-    let insideCodeBlock = false;
-    let codeBlockLines: string[] = [];
+    const lines = answerText.split("\n"); // Split answer into lines
+    const elements: JSX.Element[] = []; // Array to hold JSX elements
+    let insideCodeBlock = false; // Flag to check if inside code block
+    let codeBlockLines: string[] = []; // Array to hold lines of code block
 
     for (let line of lines) {
       if (line.startsWith("```")) {
@@ -125,6 +132,7 @@ function App() {
     return elements;
   }
 
+  // Function to generate answer by fetch gemeni API
   async function generateAnswer(e: React.FormEvent) {
     setGeneratingAnswer(true);
     e.preventDefault();
