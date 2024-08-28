@@ -1,1 +1,1 @@
-# React-js-Gemini-API-ChatBot
+# Neura React-js-Gemini-API-ChatBot
