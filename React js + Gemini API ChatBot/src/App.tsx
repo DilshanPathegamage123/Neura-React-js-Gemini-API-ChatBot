@@ -11,6 +11,7 @@ type Message = {
 };
 
 function App() {
+  // State variables to handle states of the chatbot
   const [question, setQuestion] = useState("");
   const [conversation, setConversation] = useState<Message[]>([]);
   const [generatingAnswer, setGeneratingAnswer] = useState(false);
