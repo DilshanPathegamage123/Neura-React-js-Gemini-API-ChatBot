@@ -4,6 +4,7 @@
     "react-syntax-highlighter": "^15.5.0"
   },
   "devDependencies": {
+    "@types/react-icons": "^3.0.0",
     "@types/react-syntax-highlighter": "^15.5.13"
   }
 }
