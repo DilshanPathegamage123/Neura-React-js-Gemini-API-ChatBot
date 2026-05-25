@@ -160,7 +160,7 @@ function App() {
     try {
       //Fetch Gemeni API with API key
       const response = await axios({
-        url: `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${
+        url: `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${
           import.meta.env.VITE_API_GENERATIVE_LANGUAGE_CLIENT // Get API key from the .env file
         }`,
         method: "post",
